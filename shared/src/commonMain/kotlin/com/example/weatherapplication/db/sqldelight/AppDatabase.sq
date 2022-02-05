@@ -1,0 +1,19 @@
+CREATE TABLE SavedCity(
+    id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    minDegree TEXT  NOT NULL,
+    maxDegree TEXT NOT NULL
+);
+
+insertSavedCity:
+INSERT INTO SavedCity(id, name, minDegree, maxDegree) VALUES (?,?,?,?);
+
+removeSavedCity:
+DELETE FROM SavedCity WHERE id = ?;
+
+selectAllSavedCities:
+SELECT * FROM SavedCity;
+
+selectSavedCityById:
+-- SELECT * FROM CharacterFavorite WHERE id = ?;
+SELECT EXISTS(SELECT 1 FROM SavedCity WHERE id = ? LIMIT 1);

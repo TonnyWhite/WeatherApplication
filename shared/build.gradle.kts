@@ -1,6 +1,8 @@
 plugins {
     kotlin("multiplatform")
+    id("com.squareup.sqldelight")
     id("com.android.library")
+
 }
 
 kotlin {
@@ -19,6 +21,7 @@ kotlin {
     sourceSets {
         val ktorVersion = "1.6.7"
         val koinVersion= "3.1.5"
+        val sqlDelightVersion = "1.5.3"
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
@@ -33,6 +36,9 @@ kotlin {
                 //Koin
                 implementation("io.insert-koin:koin-core:$koinVersion")
 
+                //SqlDelite
+                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+
 
             }
         }
@@ -45,6 +51,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
             }
         }
         val androidTest by getting {
@@ -62,6 +69,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
             }
             //iosSimulatorArm64Main.dependsOn(this)
         }
@@ -83,5 +91,12 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 31
+    }
+}
+
+sqldelight {
+    database("AppDatabase") {
+        packageName = "package com.example.weatherapplication.db.sqldelight"
+
     }
 }
